@@ -30,7 +30,7 @@ RUN git clone https://github.com/mimblewimble/grin-wallet.git --branch v1.1.0-be
 FROM debian:latest
 
 # 2.1 Install and generate additional locales
-RUN apt update && apt install -y locales openssl expect curl \
+RUN apt update && apt install -y locales openssl expect curl supervisor \
     && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
@@ -45,5 +45,7 @@ VOLUME ["/root/.grin"]
 # Copy entry point file and set correct permissions
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT ["entrypoint.sh"]
