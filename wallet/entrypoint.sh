@@ -6,7 +6,7 @@ if [ ! -f $GRIN_PATH/grin-wallet.toml ]; then
     expect -c 'spawn grin-wallet '$GRIN_NET_ARG' init; expect "Password:"; send '$GRIN_WALLET_PASSWORD'\r; expect "Confirm Password:"; send '$GRIN_WALLET_PASSWORD'\r; expect eof'
 fi
 
-if [ $GRIN_INCLUDE_OWNER_API = true ]; then
+if [ $GRIN_WALLET_INCLUDE_FOREIGN_API = true ]; then
     # Include the foreign API endpoints on the same port
     sed -i -e 's/owner_api_include_foreign = false/owner_api_include_foreign = true/' $GRIN_PATH/grin-wallet.toml
 else
@@ -25,5 +25,13 @@ if [ ! -d $GRIN_PATH/owner ]; then
     mkdir $GRIN_PATH/owner
 fi
 
-# Run Supervisor (starts a wallet listener and owner API listener)
-/usr/bin/supervisord
+if [ $GRIN_WALLET_MODE = listener ]; then
+    # Only run Grin wallet listener
+    grin-wallet $GRIN_NET_ARG -e -r http://$GRIN_SERVER_HOST:$GRIN_SERVER_PORT -p $GRIN_WALLET_PASSWORD listen
+elif [ $GRIN_WALLET_MODE = owner ]; then
+    # Only run Grin owner API listener
+    grin-wallet $GRIN_NET_ARG -r http://$GRIN_SERVER_HOST:$GRIN_SERVER_PORT -p $GRIN_WALLET_PASSWORD owner_api
+else
+    # Run Supervisor (starts a Grin wallet listener and Grin owner API listener)
+    /usr/bin/supervisord
+fi
