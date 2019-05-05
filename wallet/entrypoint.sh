@@ -14,7 +14,7 @@ else
     sed -i -e 's/owner_api_include_foreign = true/owner_api_include_foreign = false/' $GRIN_PATH/grin-wallet.toml
 fi
 
-# # Ensure we can receive Grin (similar to specifying the "-e" option to "grin-wallet" command)
+# # Ensure we can receive Grin (similar to specifying the "-e" option to "grin-wallet listen" command)
 # sed -i -e 's/api_listen_interface = "127.0.0.1"/api_listen_interface = "0.0.0.0"/' $GRIN_PATH/grin-wallet.toml
 
 # Overwrite the API key
