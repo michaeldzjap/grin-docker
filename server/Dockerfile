@@ -22,7 +22,7 @@ RUN set -ex && \
 WORKDIR /usr/src
 
 # 1.2 Clone and build the Grin server
-RUN git clone https://github.com/mimblewimble/grin.git --branch v1.1.0-beta.2 \
+RUN git clone https://github.com/mimblewimble/grin.git --branch v1.1.0 \
     && cd grin \
     && cargo build --release
 
