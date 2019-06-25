@@ -22,7 +22,7 @@ RUN set -ex && \
 WORKDIR /usr/src
 
 # 1.2 Clone and build the Grin wallet
-RUN git clone https://github.com/mimblewimble/grin-wallet.git --branch v1.1.0 \
+RUN git clone https://github.com/mimblewimble/grin-wallet.git --branch v2.0.0-beta.1 \
     && sed -i -e 's/format!("127.0.0.1:{}", self.owner_api_listen_port())/format!("0.0.0.0:{}", self.owner_api_listen_port())/' /usr/src/grin-wallet/config/src/types.rs \
     && cd grin-wallet \
     && cargo build --release
