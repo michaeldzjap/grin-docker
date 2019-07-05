@@ -27,6 +27,7 @@ FROM debian:latest
 
 # 2.1 Install and generate additional locales
 RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y locales openssl \
+    && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales \
     && update-locale LANG=en_US.UTF-8
 
