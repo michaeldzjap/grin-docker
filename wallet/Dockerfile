@@ -1,19 +1,16 @@
 # Multi-stage build, requires Docker >= 17.05
 
 # 1. Build stage
-FROM rust:latest as builder
+FROM alpine:latest as builder
 
 # 1.1 Install all build requirements
-RUN set -ex && \
-    apt update && \
-    apt --no-install-recommends --yes install \
-    clang \
-    libclang-dev \
+RUN apk update && apk upgrade && apk add --no-cache \
+    clang-dev \
     llvm-dev \
-    libncurses5 \
-    libncursesw5 \
-    cmake \
-    git
+    ncurses-dev \
+    git \
+    cargo \
+    rust
 
 WORKDIR /usr/src
 
@@ -24,15 +21,10 @@ RUN git clone https://github.com/mimblewimble/grin-wallet.git --branch v2.0.0 \
     && cargo build --release
 
 # 2. Runtime stage
-FROM debian:latest
+FROM alpine:latest
 
-# 2.1 Install and generate additional locales
-RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y locales openssl expect curl supervisor \
-    && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
-    && dpkg-reconfigure --frontend=noninteractive locales \
-    && update-locale LANG=en_US.UTF-8
-
-ENV LANG en_US.UTF-8
+RUN apk update && apk upgrade \
+    && apk add --no-cache ncurses libgcc expect curl supervisor
 
 COPY --from=builder /usr/src/grin-wallet/target/release/grin-wallet /usr/local/bin/grin-wallet
 

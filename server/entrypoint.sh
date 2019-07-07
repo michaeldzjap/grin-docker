@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -ex
 
 if [ ! -f $GRIN_PATH/grin-server.toml ]; then
