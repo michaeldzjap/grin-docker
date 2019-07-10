@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -ex
 
 if [ ! -f $GRIN_PATH/grin-wallet.toml ]; then
