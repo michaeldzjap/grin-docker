@@ -22,7 +22,7 @@ RUN git clone https://github.com/mimblewimble/grin.git --branch v2.0.0 \
 # 2. Runtime stage
 FROM alpine:latest
 
-RUN apk update && apk upgrade && apk add --no-cache ncurses libgcc
+RUN apk update && apk upgrade && apk add --no-cache ncurses libgcc bash
 
 COPY --from=builder /usr/src/grin/target/release/grin /usr/local/bin/grin
 

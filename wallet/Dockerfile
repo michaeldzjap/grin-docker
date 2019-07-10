@@ -24,7 +24,7 @@ RUN git clone https://github.com/mimblewimble/grin-wallet.git --branch v2.0.0 \
 FROM alpine:latest
 
 RUN apk update && apk upgrade \
-    && apk add --no-cache ncurses libgcc expect curl supervisor
+    && apk add --no-cache ncurses libgcc bash expect curl supervisor
 
 COPY --from=builder /usr/src/grin-wallet/target/release/grin-wallet /usr/local/bin/grin-wallet
 
