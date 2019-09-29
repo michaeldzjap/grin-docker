@@ -15,7 +15,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
 WORKDIR /usr/src
 
 # 1.2 Clone and build the Grin server
-RUN git clone https://github.com/mimblewimble/grin.git --branch v2.0.0 \
+RUN git clone https://github.com/mimblewimble/grin.git --branch v2.1.0-beta.1 \
     && cd grin \
     && cargo build --release
 

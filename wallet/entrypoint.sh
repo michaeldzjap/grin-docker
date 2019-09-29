@@ -17,8 +17,9 @@ fi
 # # Ensure we can receive Grin (similar to specifying the "-e" option to "grin-wallet listen" command)
 # sed -i -e 's/api_listen_interface = "127.0.0.1"/api_listen_interface = "0.0.0.0"/' $GRIN_PATH/grin-wallet.toml
 
-# Overwrite the API key
+# Overwrite the API keys
 echo $GRIN_API_SECRET > $GRIN_PATH/.api_secret
+echo $GRIN_OWNER_API_SECRET > $GRIN_PATH/.owner_api_secret
 
 if [ ! -d $GRIN_PATH/owner ]; then
     # Create the folder for the owner API wallet listener
